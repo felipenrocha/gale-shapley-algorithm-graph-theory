@@ -1,5 +1,10 @@
 #  Trabalho Teoria e Aplicacao de Grafos Trabalho 2 - UnB 1/2021
 
+
+https://gitlab.com/felipenrocha19/gale-shapley-algorithm
+
+
+
 # Especificações :
 
 Linguagem: Python3
@@ -40,4 +45,7 @@ Algoritmo:
                             remova aluno concorrente do projeto
                             adicione aluno ao projeto
 
-Remova projetos que possuem vagas restantes
+
+    Remova projetos que possuem vagas restantes
+    End
+
