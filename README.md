@@ -46,6 +46,6 @@ Algoritmo:
                             adicione aluno ao projeto
 
 
-    Remova projetos que possuem vagas restantes
+    Remova conxao entre projetos e alunos que possuem vagas restantes
     End
 
