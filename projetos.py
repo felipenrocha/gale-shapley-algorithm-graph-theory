@@ -25,13 +25,25 @@ class Projetos(object):
             return True
         return False
 
+    def get_quantidade_projetos(self):
+        """Retorna quantidade de projetos com vagas completas"""
+        i = 0
+        print('---------- GRAFO BIPARTIDO ----------------')
+        for key in self.get_projetos():
+            if len(self.get_projeto(key)['alunos']) > 0:
+                i = i + 1
+            print('Projeto: ' + key + ' ' + 'Alunos: ' +
+                  str(self.get_projeto(key)['alunos']))
+
+        return i
+
     def get_projeto_requisito(self, projeto):
         """Retorna o requisito do projeto"""
         return int(self.get_projeto(projeto)['requisito'])
 
     def is_project_full(self, projeto_key):
         """Retorna booleano se o projeto estiver cheio"""
-        if len(self.get_projeto(projeto_key)['alunos']) > self.get_projeto_requisito(projeto_key):
+        if len(self.get_projeto(projeto_key)['alunos']) >= self.get_projeto_vagas(projeto_key) - 1:
             return True
         return False
 
@@ -49,12 +61,17 @@ class Projetos(object):
 
     def remove_projects_not_full(self, s):
         """Funçao para limpar todos projetos que ainda possuem vagas."""
+        i = 0
+        projeto_deletados = []
         for aluno, projeto in s:
             if self.get_projeto_vagas(projeto) > 0:
+                i = i + 1
                 s.remove((aluno, projeto))
-                print('Projeto com vagas sobrando: ' + projeto)
+                if projeto not in projeto_deletados:
+                    projeto_deletados.append(projeto)
                 self.remove_aluno_from_projeto(aluno, projeto)
-
+        print('---------')
+        print('Projetos removidos por falta de alunos: ' + str(projeto_deletados))
         return s
 
     def get_total_vagas_sobrando(self):

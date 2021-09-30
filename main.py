@@ -22,6 +22,7 @@ def main():
 
 
 def gale(alunos, projetos):
+    """Gale-Shapley Algorithm """
     # conjunto de pares final
     s = []
     # loop para alunos do conjunto de alunos:
@@ -34,7 +35,7 @@ def gale(alunos, projetos):
         while(alunos.is_aluno_free(aluno_key) and i < 3):
             # id do projeto é o index do contador
             projeto = alunos.get_aluno_projetos(aluno_key)[i]
-            # se a nota for suficiente de acordo com o requisito:
+            # se a nota for maior ou igual ao requisito:
             if aluno['nota'] >= projetos.get_projeto_requisito(projeto):
                 # if: se o projeto tiver vagas
                 if (projetos.is_projeto_free(projeto)):
@@ -45,48 +46,52 @@ def gale(alunos, projetos):
                     # sai do loop (while) pois o aluno ja foi designado a um projeto
                     break
                 # else: se o projeto nao tiver vagas
-                else:
+                elif projetos.is_project_full(projeto):
                     # para cada aluno concorrente que ja está no  projeto (casado)
                     for aluno_concorrente in projetos.get_projeto(projeto)['alunos']:
                         # se a nota do aluno atual for maior que a do aluno concorrente
                         if (aluno['nota'] > alunos.get_aluno_nota(aluno_concorrente)):
                             # divorcio entre aluno concorrente e projeto
+
                             desengage(projetos, alunos,
                                       aluno_concorrente, projeto)
                             # remove a tupla do conjunto final
                             s.remove((aluno_concorrente, projeto))
+                            print('---- Desemparelhamento entre:   ' +
+                                  aluno_concorrente + ' e ' + projeto + '----')
+
                             # casamento entre o aluno e o projeto
                             engage(projetos, alunos, aluno_key, projeto)
                             # adiciona a tupla ao conjunto final.
                             s.append((aluno_key, projeto))
+                            print('---- Emparelhamento entre: ' +
+                                  aluno_key + ' e ' + projeto + '----')
                             # sai do loop (while) pois o aluno ja foi designado a um projeto
                             break
+
             # se a nota nao for suficente pule para o proximo projeto:
             i = i + 1
-    # depois do loop de alunos, é feito uma limpa nos projetos que nao possuíram todas as vagas completadas
-    final_set = projetos.remove_projects_not_full(s)
-    print('Conjunto Final ((Aluno,Projeto),  ...) : ' + str(final_set))
+    # depois do loop de alunos, é feito uma limpa nos projetos que nao possuem todas as vagas completadas
+    projetos.remove_projects_not_full(s)
+
+    # print do conjunto final:
     i = 0
-    for key in projetos.get_projetos():
-        if len(projetos.get_projeto(key)['alunos']) > 0:
-            i = i + 1
-            print('Projeto: ' + key + ' ' + 'Alunos: ' + str(projetos.get_projeto(key)['alunos']))
-    print('Quantidade de projetos designados:' + str(i))
+    quantidade_projetos = projetos.get_quantidade_projetos()
+    print(" ---------------- ")
+    print('Quantidade de projetos designados:' + str(quantidade_projetos))
 
 
 def engage(projetos, alunos, aluno_key, projeto_key):
+    """Casamento entre aluno e projeto, nos objetos projetos e alunos"""
     projetos.add_aluno_to_projeto(aluno_key, projeto_key)
     alunos.set_aluno_to_project(aluno_key)
-    print('Aluno Adicionado a projeto: ' +
-          aluno_key + ' e ' + projeto_key)
 
 
 def desengage(projetos, alunos, aluno_key, projeto_key):
+    """Divorcio entre aluno e projeto, nos objetos projetos e alunos"""
     projetos.remove_aluno_from_projeto(
         aluno_key, projeto_key)
     alunos.remove_aluno_from_projeto(aluno_key)
-    print('Aluno removido de projeto: ' +
-          aluno_key + ' e ' + projeto_key)
 
 
 if __name__ == "__main__":

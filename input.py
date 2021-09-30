@@ -1,8 +1,4 @@
-"""Módulo responsável para gerenciar a manipulação de dados dos arquivo"""
-from ast import literal_eval
-import re
-
-
+"""Classe responsável para gerenciar a manipulação de dados dos arquivo de entrada txt"""
 class FileManagement(object):
     def __init__(self, arquivo):
         """Inicializa a classe com o arquivo baseado no diretório"""
