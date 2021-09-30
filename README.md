@@ -23,19 +23,21 @@ O algoritmo utilizado é semelhante ao da imagem:
 
 
 
+Algoritmo:
 
-Para cada aluno do conjunto de alunos:
-    Para cada projeto na lista de preferencia do aluno:
 
-        Se a nota do aluno for abaixo do requisito da prova, pule para o proximo projeto;
+    Para cada aluno do conjunto de alunos:
+        Para cada projeto na lista de preferencia do aluno:
 
-        Else:
-            Se o projeto ainda possuir vagas:
-                adicione o aluno ao projeto
-            Se não tiver vagas:
-                Para cada aluno concorrente:
-                    Se a nota do aluno > nota aluno oncorrente:
-                        remova aluno concorrente do projeto
-                        adicione aluno ao projeto
+            Se a nota do aluno for abaixo do requisito da prova, pule para o proximo projeto;
+
+            Else:
+                Se o projeto ainda possuir vagas:
+                    adicione o aluno ao projeto
+                Se não tiver vagas:
+                    Para cada aluno concorrente:
+                        Se a nota do aluno > nota aluno oncorrente:
+                            remova aluno concorrente do projeto
+                            adicione aluno ao projeto
 
 Remova projetos que possuem vagas restantes
